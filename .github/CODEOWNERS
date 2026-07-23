@@ -1,0 +1,7 @@
+# Terraform infrastructure
+/terraform/ @quanglinh0411
+# GitHub configuration, workflows, PR template and CODEOWNERS
+/.github/ @quanglinh0411
+
+# Documentation
+/docs/ @quanglinh0411
