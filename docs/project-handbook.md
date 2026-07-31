@@ -368,5 +368,3 @@ The project should demonstrate practical experience with:
 - CI/CD
 - Infrastructure Design
 - DevOps Best Practices
-
-The outcome should be sufficient to support interviews for Senior DevOps / Platform Engineer positions.
