@@ -1,4 +1,4 @@
-# AWS DevOps Portfolio Project Handbook
+# AWS DevOps Project Handbook
 
 > Last Updated: YYYY-MM-DD
 
@@ -8,15 +8,7 @@
 
 ## Goal
 
-Build a production-like AWS DevOps portfolio project that demonstrates the skills required for a Senior DevOps / Platform Engineer role.
-
 The project focuses on modern DevOps practices including Infrastructure as Code, CI/CD, container orchestration, observability, security, and cost optimization.
-
----
-
-## Target Duration
-
-4 months
 
 ---
 
