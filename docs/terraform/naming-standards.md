@@ -4,47 +4,169 @@
 
 This document defines the naming conventions and coding standards used throughout the Terraform codebase.
 
-Consistent naming improves readability, maintainability, and collaboration while reducing configuration errors.
+The project follows a multi-environment repository structure, where each environment is implemented as an independent Terraform root module.
 
-These standards apply to all Terraform resources created in this project.
+Consistent naming improves readability, maintainability, and collaboration while reducing configuration errors.
 
 ---
 
 # Objective
 
-Establish a consistent naming convention for Terraform resources, variables, outputs, files, and local values.
+Establish consistent naming conventions and repository standards for Terraform resources, variables, outputs, files, and deployment environments.
 
 ---
 
 # Why This Matters
 
-As the infrastructure grows, inconsistent naming can make Terraform code difficult to understand and maintain.
+As infrastructure grows, inconsistent naming makes Terraform configurations difficult to understand and maintain.
 
-Following a standard naming convention provides several benefits:
+Following common standards provides several benefits:
 
 - Improved readability
-- Consistent code structure
+- Consistent code organization
 - Easier collaboration
 - Simplified troubleshooting
-- Better scalability
+- Better long-term maintainability
 
 ---
 
-# Naming Principles
+# Repository Naming Strategy
 
-- Use lowercase letters only.
-- Use underscores (`_`) instead of hyphens (`-`) for Terraform identifiers.
-- Use descriptive names.
-- Keep names concise and meaningful.
-- Follow HashiCorp Terraform Style Guide recommendations.
+The Terraform repository is organized as follows:
+
+```text
+terraform/
+├── README.md
+│
+├── environments/
+│   ├── dev/
+│   ├── staging/
+│   └── production/
+│
+└── modules/
+```
+
+Each environment represents an independent Terraform root module.
+
+Terraform commands are executed from within the target environment.
+
+Example:
+
+```bash
+cd terraform/environments/dev
+
+terraform init
+terraform plan
+terraform apply
+```
 
 ---
+
+# Terraform File Naming
+
+Every environment follows the same Terraform file structure.
+
+```text
+backend.tf
+versions.tf
+providers.tf
+variables.tf
+terraform.tfvars
+locals.tf
+outputs.tf
+main.tf
+```
+
+The repository contains a single `terraform/README.md` that documents the overall Terraform architecture and workflow.
+
+Each file has a single responsibility.
+
+| File | Responsibility |
+|------|----------------|
+| backend.tf | Configure the Terraform backend |
+| versions.tf | Define Terraform and provider version requirements |
+| providers.tf | Configure the AWS provider |
+| variables.tf | Define input variables |
+| terraform.tfvars | Store environment-specific values |
+| locals.tf | Define reusable local values |
+| outputs.tf | Export Terraform outputs |
+| main.tf | Define infrastructure resources |
+
+---
+
+# Repository Evolution Strategy
+
+Initially, each environment maintains its own Terraform configuration.
+
+Infrastructure resources are implemented inside `main.tf`.
+
+Example:
+
+```text
+terraform/
+└── environments/
+    └── dev/
+        ├── backend.tf
+        ├── providers.tf
+        ├── versions.tf
+        ├── variables.tf
+        ├── terraform.tfvars
+        ├── locals.tf
+        ├── outputs.tf
+        └── main.tf
+```
+
+As the infrastructure grows, resources may be split into dedicated files.
+
+Example:
+
+```text
+main.tf
+network.tf
+ecs.tf
+alb.tf
+ecr.tf
+monitoring.tf
+```
+
+Terraform automatically loads every `.tf` file within the current working directory.
+
+Splitting files improves readability without changing Terraform behavior.
+
+---
+
+# Future Improvements
+
+The `modules/` directory is reserved for reusable Terraform modules.
+
+It is intentionally left unused during the early milestones.
+
+Once the infrastructure contains reusable components shared across multiple environments, common resources may be extracted into modules.
+
+Example:
+
+```text
+terraform/
+├── environments/
+│   ├── dev/
+│   ├── staging/
+│   └── production/
+│
+└── modules/
+    ├── networking/
+    ├── ecs/
+    ├── ecr/
+    ├── alb/
+    └── monitoring/
+```
+
+The project intentionally prioritizes understanding Terraform fundamentals before introducing reusable modules and additional abstraction.
 
 # Resource Naming
 
-Terraform resource labels should describe the purpose of the resource rather than the AWS service.
+Terraform resource identifiers should describe the purpose of the resource rather than the AWS service.
 
-## Good Examples
+Good examples:
 
 ```hcl
 resource "aws_vpc" "main" {}
@@ -58,14 +180,14 @@ resource "aws_route_table" "public" {}
 resource "aws_internet_gateway" "main" {}
 ```
 
-## Avoid
+Avoid:
 
 ```hcl
 resource "aws_vpc" "vpc1" {}
 
 resource "aws_subnet" "subnet1" {}
 
-resource "aws_subnet" "test" {}
+resource "aws_route_table" "route1" {}
 ```
 
 ---
@@ -74,16 +196,18 @@ resource "aws_subnet" "test" {}
 
 Variables should:
 
-- use lowercase
-- use underscores
+- use lowercase letters
+- use underscores (`_`)
 - clearly describe their purpose
 
-## Good Examples
+Examples:
 
 ```hcl
-variable "aws_region" {}
-
 variable "project_name" {}
+
+variable "environment" {}
+
+variable "aws_region" {}
 
 variable "vpc_cidr" {}
 
@@ -94,27 +218,11 @@ variable "public_subnet_b_cidr" {}
 
 ---
 
-# Output Naming
-
-Outputs should clearly describe the value being exported.
-
-## Good Examples
-
-```hcl
-output "vpc_id" {}
-
-output "public_subnet_a_id" {}
-
-output "public_subnet_b_id" {}
-```
-
----
-
 # Local Values
 
-Local values should describe reusable expressions.
+Reusable expressions should be defined using local values.
 
-## Example
+Example:
 
 ```hcl
 locals {
@@ -128,126 +236,123 @@ locals {
 
 ---
 
-# File Organization
+# Output Naming
 
-Terraform configuration should be organized by responsibility.
+Outputs should clearly describe the value they expose.
+
+Examples:
+
+```hcl
+output "vpc_id" {}
+
+output "public_subnet_a_id" {}
+
+output "public_subnet_b_id" {}
+```
+
+---
+
+# AWS Resource Naming
+
+Terraform identifiers should remain simple.
+
+AWS resource names should include the project name and deployment environment.
 
 Example:
 
+```hcl
+tags = {
+  Name = "${var.project_name}-${var.environment}-vpc"
+}
+```
+
+Example resource names:
+
 ```text
-terraform/
-├── backend.tf
-├── providers.tf
-├── versions.tf
-├── variables.tf
-├── outputs.tf
-├── locals.tf
-├── network.tf
-├── terraform.tfvars.example
-└── README.md
+aws-devops-project-dev-vpc
+
+aws-devops-project-staging-vpc
+
+aws-devops-project-production-vpc
 ```
 
 ---
 
 # Resource Tags
 
-All supported AWS resources should use a common tagging strategy.
+All supported AWS resources should apply the common tagging strategy.
 
-Example:
-
-```hcl
-tags = local.common_tags
-```
-
-The common tags should include:
+Minimum required tags:
 
 | Tag | Description |
 |------|-------------|
 | Project | Project name |
 | Environment | Deployment environment |
 | ManagedBy | Terraform |
-| Owner | Team owner |
+| Owner | Project owner |
 
 ---
 
-# Module Naming
+# Future Improvements
 
-Although Terraform Modules are not introduced in the current milestone, future modules should follow these naming conventions.
+Terraform modules are intentionally not introduced during the early stages of the project.
 
-Examples:
+Once the infrastructure becomes larger and contains reusable components, common resources may be extracted into reusable Terraform modules.
 
-```text
-modules/
-
-network/
-
-ecs/
-
-alb/
-
-ecr/
-
-monitoring/
-```
-
----
-
-# Naming Examples
-
-| Resource | Terraform Name |
-|-----------|----------------|
-| VPC | main |
-| Public Subnet A | public_a |
-| Public Subnet B | public_b |
-| Internet Gateway | main |
-| Route Table | public |
-| ECS Cluster | main |
-| ALB | public |
-| Security Group | alb |
+The priority is to understand Terraform fundamentals before introducing additional abstraction.
 
 ---
 
 # Verification
 
-The following verification steps have been completed:
+The following verification steps have been completed.
 
-- Naming conventions have been documented.
-- Naming examples have been provided.
-- File organization has been defined.
-- Terraform identifiers follow HashiCorp recommendations.
+- Repository structure has been defined.
+- Environment naming conventions have been documented.
+- Terraform file responsibilities have been defined.
+- Resource naming standards have been documented.
+- Variable naming conventions have been documented.
 
 ---
 
 # Lessons Learned
 
-- Consistent naming improves long-term maintainability.
-- Descriptive resource names are easier to understand than generic names.
-- Separating Terraform configuration by responsibility keeps the project organized.
-- A shared naming standard reduces confusion when multiple contributors work on the same infrastructure.
+- Every deployment environment can function as an independent Terraform root module.
+- Terraform automatically loads all `.tf` files within the current working directory.
+- Clear naming standards improve collaboration and maintainability.
+- Simplicity should be prioritized before introducing reusable modules.
+- Repository structure should evolve together with the infrastructure.
 
 ---
 
 # Screenshots
 
-## Terraform Project Structure
-
-![Terraform Project Structure](../assets/terraform/project-structure.png)
-
----
-
-## Terraform Repository
+## Terraform Repository Structure
 
 ![Terraform Repository](../assets/terraform/repository-structure.png)
 
 ---
 
-## Example Terraform Resources
+## Development Environment Structure
 
-![Terraform Resources](../assets/terraform/resource-naming-example.png)
+![Development Environment](../assets/terraform/dev-structure.png)
+
+---
+
+## Example Terraform Resource Naming
+
+![Terraform Resource Naming](../assets/terraform/resource-naming-example.png)
+
+---
+
+## Local Terraform Workflow
+
+![Terraform Workflow](../assets/terraform/local-workflow.png)
 
 ---
 
 # References
 
+- HashiCorp Terraform Documentation
 - HashiCorp Terraform Style Guide
-- Terraform Language Documentation
+- Terraform CLI Documentation
