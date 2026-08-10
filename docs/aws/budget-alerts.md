@@ -34,7 +34,7 @@ The alerts are attached to the existing monthly cost budget.
 
 | Item | Value |
 |------|-------|
-| Budget Name | My Monthly Cost Budget |
+| Budget Name | <your-monthly-cost-budget-name> |
 | Budget Type | Cost Budget |
 | Budget Period | Monthly |
 | Budget Amount | 20 USD |
