@@ -158,19 +158,21 @@ flowchart TB
 
 Each environment should have an independent Terraform state, environment-specific variables, resource naming, network configuration, and IAM permissions.
 
-Recommended naming convention:
+AWS resources use the lowercase project token `ap`, which represents **AWS Platform**. The standard naming format is:
 
 ```text
-<project>-<environment>-<resource>
+ap-<environment>-<resource>[-<qualifier>]
 ```
 
 Examples:
 
 ```text
-aws-platform-dev-vpc
-aws-platform-staging-eks
-aws-platform-production-rds
+ap-dev-vpc
+ap-staging-alb
+ap-production-ecs-cluster
 ```
+
+See [AWS Resource Naming Convention](docs/standards/naming-convention.md) for approved identifiers, tags, service-specific exceptions, and additional examples.
 
 ## Prerequisites
 
