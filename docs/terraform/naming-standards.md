@@ -339,18 +339,6 @@ The following verification steps have been completed.
 
 ---
 
-## Example Terraform Resource Naming
-
-![Terraform Resource Naming](../assets/terraform/resource-naming-example.png)
-
----
-
-## Local Terraform Workflow
-
-![Terraform Workflow](../assets/terraform/local-workflow.png)
-
----
-
 # References
 
 - HashiCorp Terraform Documentation
