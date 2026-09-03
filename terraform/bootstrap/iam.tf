@@ -10,6 +10,17 @@ data "aws_iam_policy_document" "policy_doc" {
     actions   = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
     resources = ["${aws_s3_bucket.backend.arn}/*"]
   }
+
+  statement {
+     actions = [
+       "kms:Encrypt",
+       "kms:Decrypt",
+       "kms:ReEncrypt*",
+       "kms:GenerateDataKey*",
+       "kms:DescribeKey"
+     ]
+     resources = [aws_kms_key.backend_encryption_key.arn]
+   }
 }
 
 resource "aws_iam_policy" "policy" {

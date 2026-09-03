@@ -1,7 +1,7 @@
 aws_region  = "ap-southeast-1"
 aws_profile = "your-sso-profile"
 
-project_name = "ap"
+project_name = "aws-devops-project"
 environment  = "dev"
 
 public_subnet_cidrs = {

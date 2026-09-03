@@ -30,13 +30,3 @@ output "public_route_table_id" {
   description = "ID of the route table associated with the public subnets"
   value       = aws_route_table.public.id
 }
-
-output "remote_backend" {
-  description = "Remote backend configuration for Terraform state"
-  sensitive   = true
-  value = {
-    bucket         = aws_s3_bucket.backend.bucket
-    region         = data.aws_region.current.region
-    role_arn       = aws_iam_role.iam_role.arn
-  }
-}

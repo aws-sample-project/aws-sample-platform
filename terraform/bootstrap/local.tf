@@ -5,4 +5,6 @@ locals {
     Owner       = "PlatformTeam"
     ManagedBy   = "Terraform"
   }
+
+  principal_arns = data.aws_caller_identity.current.arn
 }
