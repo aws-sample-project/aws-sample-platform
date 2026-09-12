@@ -39,9 +39,16 @@ resource "aws_iam_role" "iam_role" {
       {
         "Action": "sts:AssumeRole",
         "Principal": {
-        "AWS": ${jsonencode(local.principal_arns)}
-      },
-      "Effect": "Allow"
+           "AWS": "arn:aws:iam::${local.account_id}:root"
+        },
+        "Effect": "Allow",
+        "Condition": {
+          "ArnLike": {
+            "aws:PrincipalArn": 
+              ["arn:aws:iam::${local.account_id}:role/aws-reserved/sso.amazonaws.com/*/AWSReservedSSO_PlatformAdmin_*",
+               "arn:aws:iam::${local.account_id}:role/aws-reserved/sso.amazonaws.com/*/AWSReservedSSO_PlatformEngineer_*"]
+          }
+        }
       }
     ]
   }
