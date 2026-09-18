@@ -30,3 +30,8 @@ output "public_route_table_id" {
   description = "ID of the route table associated with the public subnets"
   value       = aws_route_table.public.id
 }
+
+output "ecr_repository_url" {
+  description = "URL of the ECR repository"
+  value       = aws_ecr_repository.ecr.repository_url
+}
