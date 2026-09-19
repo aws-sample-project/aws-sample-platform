@@ -32,6 +32,8 @@ output "public_route_table_id" {
 }
 
 output "ecr_repository_url" {
-  description = "URL of the ECR repository"
-  value       = aws_ecr_repository.ecr.repository_url
+  description = "URLs of the ECR repositories"
+  value = {
+    for service, repository in aws_ecr_repository.ecr : service => repository.repository_url
+  }
 }
