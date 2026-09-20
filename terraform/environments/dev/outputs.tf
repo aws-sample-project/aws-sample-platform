@@ -37,3 +37,18 @@ output "ecr_repository_url" {
     for service, repository in aws_ecr_repository.ecr : service => repository.repository_url
   }
 }
+
+output "ecs_task_definition_arn" {
+  description = "ARN of the dev ECS application task definition"
+  value       = aws_ecs_task_definition.app.arn
+}
+
+output "ecs_task_execution_role_arn" {
+  description = "ARN of the ECS task execution role"
+  value       = aws_iam_role.ecs_task_execution.arn
+}
+
+output "ecs_log_group_name" {
+  description = "CloudWatch log group used by the ECS application task"
+  value       = aws_cloudwatch_log_group.app.name
+}
