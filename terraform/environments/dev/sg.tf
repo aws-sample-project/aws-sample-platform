@@ -9,6 +9,10 @@ resource "aws_security_group" "alb" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+     Name = "${var.project_name}-${var.environment}-alb-sg"
+   }
 }
 
 resource "aws_security_group" "ui" {
@@ -21,6 +25,10 @@ resource "aws_security_group" "ui" {
     to_port         = 8080
     protocol        = "tcp"
     security_groups = [aws_security_group.alb.id]
+  }
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-ui-sg"
   }
 }
 
@@ -35,6 +43,10 @@ resource "aws_security_group" "catalog" {
     protocol        = "tcp"
     security_groups = [aws_security_group.ui.id]
   }
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-catalog-sg"
+  }
 }
 
 resource "aws_security_group" "cart" {
@@ -47,5 +59,9 @@ resource "aws_security_group" "cart" {
     to_port         = 8080
     protocol        = "tcp"
     security_groups = [aws_security_group.ui.id]
+  }
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-cart-sg"
   }
 }
