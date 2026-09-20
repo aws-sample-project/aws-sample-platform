@@ -37,3 +37,13 @@ output "ecr_repository_url" {
     for service, repository in aws_ecr_repository.ecr : service => repository.repository_url
   }
 }
+
+output "security_group_ids" {
+  description = "IDs of the security groups"
+  value = {
+    alb     = aws_security_group.alb.id
+    ui      = aws_security_group.ui.id
+    catalog = aws_security_group.catalog.id
+    cart    = aws_security_group.cart.id
+  }
+}
