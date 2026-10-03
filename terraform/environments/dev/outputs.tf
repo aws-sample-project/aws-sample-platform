@@ -62,3 +62,13 @@ output "ecs_execution_role_arn" {
   description = "ARN of the ECS task execution role"
   value       = module.ecs.execution_role_arn
 }
+
+output "ecs_task_definition_arn" {
+  description = "ARN of the dev ECS application task definition"
+  value       = module.ecs.task_definition_arn
+}
+
+output "ecs_log_group_name" {
+  description = "CloudWatch log group used by the ECS application task"
+  value       = module.ecs.log_group_name
+}
