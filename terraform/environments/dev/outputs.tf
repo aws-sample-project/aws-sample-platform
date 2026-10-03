@@ -38,6 +38,16 @@ output "ecr_repository_url" {
   }
 }
 
+output "security_group_ids" {
+  description = "IDs of the security groups"
+  value = {
+    alb     = aws_security_group.alb.id
+    ui      = aws_security_group.ui.id
+    catalog = aws_security_group.catalog.id
+    cart    = aws_security_group.cart.id
+  }
+}
+
 output "ecs_cluster_name" {
   description = "Name of the dev ECS cluster"
   value       = module.ecs.cluster_name
