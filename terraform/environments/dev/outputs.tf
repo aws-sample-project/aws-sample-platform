@@ -38,6 +38,31 @@ output "ecr_repository_url" {
   }
 }
 
+output "security_group_ids" {
+  description = "IDs of the security groups"
+  value = {
+    alb     = aws_security_group.alb.id
+    ui      = aws_security_group.ui.id
+    catalog = aws_security_group.catalog.id
+    cart    = aws_security_group.cart.id
+  }
+}
+
+output "ecs_cluster_name" {
+  description = "Name of the dev ECS cluster"
+  value       = module.ecs.cluster_name
+}
+
+output "ecs_cluster_arn" {
+  description = "ARN of the dev ECS cluster"
+  value       = module.ecs.cluster_arn
+}
+
+output "ecs_execution_role_arn" {
+  description = "ARN of the ECS task execution role"
+  value       = module.ecs.execution_role_arn
+}
+
 output "ecs_task_definition_arn" {
   description = "ARN of the dev ECS application task definition"
   value       = aws_ecs_task_definition.app.arn

@@ -71,3 +71,14 @@ resource "aws_route_table_association" "public_b" {
   subnet_id      = aws_subnet.public_b.id
   route_table_id = aws_route_table.public.id
 }
+
+module "ecs" {
+  source = "../../modules/ecs"
+
+  environment  = var.environment
+  cluster_name = local.ecs_cluster_name
+
+  tags = {
+    Name = local.ecs_cluster_name
+  }
+}
