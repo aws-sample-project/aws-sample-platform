@@ -12,15 +12,15 @@ data "aws_iam_policy_document" "policy_doc" {
   }
 
   statement {
-     actions = [
-       "kms:Encrypt",
-       "kms:Decrypt",
-       "kms:ReEncrypt*",
-       "kms:GenerateDataKey*",
-       "kms:DescribeKey"
-     ]
-     resources = [aws_kms_key.backend_encryption_key.arn]
-   }
+    actions = [
+      "kms:Encrypt",
+      "kms:Decrypt",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:DescribeKey"
+    ]
+    resources = [aws_kms_key.backend_encryption_key.arn]
+  }
 }
 
 resource "aws_iam_policy" "policy" {

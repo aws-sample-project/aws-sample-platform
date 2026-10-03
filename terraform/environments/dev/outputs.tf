@@ -47,3 +47,13 @@ output "security_group_ids" {
     cart    = aws_security_group.cart.id
   }
 }
+
+output "ecs_cluster_name" {
+  description = "Name of the dev ECS cluster"
+  value       = module.ecs.cluster_name
+}
+
+output "ecs_cluster_arn" {
+  description = "ARN of the dev ECS cluster"
+  value       = module.ecs.cluster_arn
+}
