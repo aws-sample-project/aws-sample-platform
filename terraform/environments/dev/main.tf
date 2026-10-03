@@ -75,6 +75,7 @@ resource "aws_route_table_association" "public_b" {
 module "ecs" {
   source = "../../modules/ecs"
 
+  environment  = var.environment
   cluster_name = local.ecs_cluster_name
 
   tags = {
