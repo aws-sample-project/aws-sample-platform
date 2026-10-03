@@ -57,3 +57,8 @@ output "ecs_cluster_arn" {
   description = "ARN of the dev ECS cluster"
   value       = module.ecs.cluster_arn
 }
+
+output "ecs_execution_role_arn" {
+  description = "ARN of the ECS task execution role"
+  value       = module.ecs.execution_role_arn
+}
