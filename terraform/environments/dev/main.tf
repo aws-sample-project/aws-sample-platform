@@ -77,6 +77,10 @@ module "ecs" {
 
   environment  = var.environment
   cluster_name = local.ecs_cluster_name
+  project_name = var.project_name
+  container_image_tag = var.container_image_tag
+  aws_region = var.aws_region
+  ui_repository_url = aws_ecr_repository.ecr["ui"].repository_url
 
   tags = {
     Name = local.ecs_cluster_name

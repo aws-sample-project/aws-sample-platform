@@ -34,3 +34,14 @@ variable "public_subnet_cidrs" {
     error_message = "Each public subnet CIDR must be a valid IPv4 CIDR block."
   }
 }
+
+variable "container_image_tag" {
+  description = "Tag of the UI image to run in the ECS task definition"
+  type        = string
+  default     = "latest"
+
+  validation {
+    condition     = trimspace(var.container_image_tag) != ""
+    error_message = "container_image_tag must not be empty."
+  }
+}
