@@ -75,14 +75,26 @@ resource "aws_route_table_association" "public_b" {
 module "ecs" {
   source = "../../modules/ecs"
 
-  environment  = var.environment
-  cluster_name = local.ecs_cluster_name
-  project_name = var.project_name
+  environment         = var.environment
+  cluster_name        = local.ecs_cluster_name
+  project_name        = var.project_name
   container_image_tag = var.container_image_tag
-  aws_region = var.aws_region
-  ui_repository_url = aws_ecr_repository.ecr["ui"].repository_url
+  aws_region          = var.aws_region
+  ui_repository_url   = aws_ecr_repository.ecr["ui"].repository_url
 
   tags = {
     Name = local.ecs_cluster_name
   }
+}
+
+module "alb" {
+  source = "../../modules/alb"
+
+  environment           = var.environment
+  project_name          = var.project_name
+  enable_alb            = var.enable_alb
+  alb_security_group_id = aws_security_group.alb.id
+  public_subnet_a_id    = aws_subnet.public_a.id
+  public_subnet_b_id    = aws_subnet.public_b.id
+  vpc_id                = aws_vpc.main.id
 }

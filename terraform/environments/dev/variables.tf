@@ -45,3 +45,9 @@ variable "container_image_tag" {
     error_message = "container_image_tag must not be empty."
   }
 }
+
+variable "enable_alb" {
+  description = "Whether to provision the application load balancer"
+  type        = bool
+  default     = false
+}
