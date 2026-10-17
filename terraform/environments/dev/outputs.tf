@@ -72,3 +72,13 @@ output "ecs_log_group_name" {
   description = "CloudWatch log group used by the ECS application task"
   value       = module.ecs.log_group_name
 }
+
+output "alb_dns_name" {
+  description = "DNS name of the Application Load Balancer"
+  value       = module.alb.alb_dns_name
+}
+
+output "alb_arn" {
+  description = "ARN of the Application Load Balancer"
+  value       = module.alb.alb_arn
+}
