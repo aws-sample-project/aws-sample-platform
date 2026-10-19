@@ -22,3 +22,8 @@ output "log_group_name" {
   description = "Name of the CloudWatch log group."
   value       = aws_cloudwatch_log_group.app.name
 }
+
+output "ui_service_name" {
+  description = "Name of the ECS service for the UI."
+  value       = aws_ecs_service.ui_service.name
+}

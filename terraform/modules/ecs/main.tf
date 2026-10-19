@@ -1,9 +1,11 @@
+# Define ECS cluster
 resource "aws_ecs_cluster" "main" {
   name = var.cluster_name
 
   tags = var.tags
 }
 
+# Define ECS capacity providers
 resource "aws_ecs_cluster_capacity_providers" "main" {
   cluster_name = aws_ecs_cluster.main.name
 
