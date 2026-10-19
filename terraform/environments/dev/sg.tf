@@ -58,6 +58,15 @@ resource "aws_vpc_security_group_ingress_rule" "ui_from_alb" {
   ip_protocol                  = "tcp"
 }
 
+resource "aws_vpc_security_group_egress_rule" "ui_https" {
+  description       = "Allow HTTPS outbound for ECR and AWS APIs"
+  security_group_id = aws_security_group.ui.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "tcp"
+  from_port         = 443
+  to_port           = 443
+}
+
 resource "aws_vpc_security_group_ingress_rule" "catalog_from_ui" {
   description                  = "Allow traffic from the UI"
   security_group_id            = aws_security_group.catalog.id

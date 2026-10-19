@@ -33,3 +33,29 @@ variable "ui_repository_url" {
   description = "ECR repository URL for the UI image"
   type        = string
 }
+
+variable "ui_security_group_id" {
+  description = "Security group ID for the UI service"
+  type        = string
+}
+
+variable "public_subnet_a_id" {
+  description = "ID of the first public subnet"
+  type        = string
+}
+
+variable "public_subnet_b_id" {
+  description = "ID of the second public subnet"
+  type        = string
+}
+
+variable "enable_alb" {
+  description = "Whether to provision the application load balancer"
+  type        = bool
+}
+
+variable "ui_target_group_arn" {
+  description = "ARN of the ALB target group for the UI service"
+  type        = string
+  nullable    = true
+}
