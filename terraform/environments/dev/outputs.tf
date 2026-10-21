@@ -70,7 +70,7 @@ output "ecs_task_definition_arn" {
 
 output "ecs_log_group_name" {
   description = "CloudWatch log group used by the ECS application task"
-  value       = module.ecs.log_group_name
+  value       = module.observability.log_group_name
 }
 
 output "alb_dns_name" {

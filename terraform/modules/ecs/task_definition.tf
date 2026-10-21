@@ -1,12 +1,3 @@
-
-# Define the CloudWatch log group for the application
-resource "aws_cloudwatch_log_group" "app" {
-  name              = "/aws/ecs/${var.project_name}/${var.environment}/app"
-  retention_in_days = 7
-
-  tags = var.tags
-}
-
 # Define the ECS task definition for the application
 resource "aws_ecs_task_definition" "app" {
   family                   = "${var.project_name}-${var.environment}-task-app"
@@ -33,7 +24,7 @@ resource "aws_ecs_task_definition" "app" {
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          awslogs-group         = aws_cloudwatch_log_group.app.name
+          awslogs-group         = var.cloudwatch_log_group_name
           awslogs-region        = var.aws_region
           awslogs-stream-prefix = "ui"
         }

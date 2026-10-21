@@ -59,3 +59,8 @@ variable "ui_target_group_arn" {
   type        = string
   nullable    = true
 }
+
+variable "cloudwatch_log_group_name" {
+  description = "Name of the CloudWatch log group for the ECS application"
+  type        = string
+}
