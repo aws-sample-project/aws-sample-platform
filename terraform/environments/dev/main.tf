@@ -86,12 +86,13 @@ module "ecs" {
   public_subnet_b_id   = aws_subnet.public_b.id
   enable_alb           = var.enable_alb
   ui_target_group_arn  = module.alb.ui_target_group_arn
+  cloudwatch_log_group_name = module.observability.log_group_name
 
   tags = {
     Name = local.ecs_cluster_name
   }
 
-  depends_on = [module.alb]
+  depends_on = [module.alb, module.observability]
 }
 
 module "alb" {
@@ -104,4 +105,11 @@ module "alb" {
   public_subnet_a_id    = aws_subnet.public_a.id
   public_subnet_b_id    = aws_subnet.public_b.id
   vpc_id                = aws_vpc.main.id
+}
+
+module "observability" {
+  source = "../../modules/observability"
+
+  environment  = var.environment
+  project_name = var.project_name
 }
